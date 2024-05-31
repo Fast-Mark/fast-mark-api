@@ -1,0 +1,1 @@
+BASE_PATH = "E:\\programming\\python projects\\testFastApi"
