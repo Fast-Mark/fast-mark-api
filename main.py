@@ -14,9 +14,6 @@ from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_
 from src.const import BASE_PATH
 from src.modules import Token, User
 from src.save_table import save_uploaded_file
-from src.txtLogger import TXTLogger
-
-txt_logger = TXTLogger("logger")
 
 app = FastAPI()
 origins = [
@@ -31,7 +28,7 @@ app.add_middleware(
 )
 
 
-# app.mount("/static", StaticFiles(directory=pkg_resources.resource_filename(__name__, 'static')), name="static")
+# app.mount("/authorization", StaticFiles(directory=pkg_resources.resource_filename(__name__, 'authorization')), name="authorization")
 # app.include_router(
 #     apiRouter,
 #     prefix="/api",
@@ -43,14 +40,13 @@ app.add_middleware(
 
 # @app.get("/.*", include_in_schema=False)
 # def root():
-#     return HTMLResponse(pkg_resources.resource_string(__name__, 'static/index.html'))
+#     return HTMLResponse(pkg_resources.resource_string(__name__, 'authorization/index.html'))
 
 
 @app.get('/')
 async def create_app(current_user: Annotated[User, Depends(get_current_active_user)]):
     # TODO: сделать редирект на стороне пользователя... А как сохранять jwt токен между страницами??? - просто передавать из "авторизован"
-    # идея такая: я создам еще одну страницу, на которой будет проверяться авторизован пользователь или нет. Если да, то дам возможность 
-    txt_logger.print(current_user.username)
+    # идея такая: я создам еще одну страницу, на которой будет проверяться авторизован пользователь или нет. Если да, то дам возможность
     if current_user.email is None:
         return FileResponse(os.path.join(BASE_PATH, ".venv/src/workspace/index.html"), media_type="text/html")
     else:
@@ -78,14 +74,24 @@ async def read_start_page(
         data={"sub": current_user.username}, expires_delta=access_token_expires
     )
 
-    response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False, domain="http://localhost:5173/")
+    response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False,
+                        domain="http://localhost:5173/")
     return HTMLResponse("src/workspace/index.html", media_type="text/html")
 
 
 #  Эта функция просто возвращает страницу входа
 @app.get('/authorization')
 async def give_authorize_page():
-    return FileResponse("src/static/index.html", media_type="text/html")
+    return FileResponse("src/authorization/index.html", media_type="text/html")
+
+
+@app.get('/{static}')
+async def give_other_statics(static: str):
+    logger = logging.getLogger("uvicorn.info")
+    logger.info(static + " sssss")
+    if static is None:
+        return FileResponse("src/authorization/index.html", media_type="text/html")
+    return FileResponse(path=f"src//{static}")
 
 
 @app.get('/create-user')
@@ -100,7 +106,6 @@ async def create_user(username: str, email: str, password: str):
 
 @app.post("/verify-user")
 async def verify_token(current_user: Annotated[User, Depends(get_current_active_user)]):
-    txt_logger.print(current_user)
     return current_user
 
 
@@ -126,7 +131,8 @@ async def login_for_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
     # СУКАА ХУЯЛИ НЕ РАБОТАЕТ
-    response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False, domain="http://localhost:5173/")
+    response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False,
+                        domain="http://localhost:5173/")
     return Token(access_token=access_token, token_type="bearer")
 
 

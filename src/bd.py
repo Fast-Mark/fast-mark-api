@@ -18,8 +18,6 @@ class UsersDB():
         self.db.commit()
 
     def create_user(self, user_name, user_password, user_emeil):
-        logger = logging.getLogger("uvicorn.info")
-        logger.info("created")
         if (user_name == None) or (user_password == None):
             return False
 
