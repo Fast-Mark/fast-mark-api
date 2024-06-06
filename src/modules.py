@@ -13,12 +13,12 @@ class Element(BaseModel):
 
 
 class ElementWrapper(BaseModel):
-    key: str | None
-    poistion_x: str | None = "0px"
+    key: str | None # Ключ из таблицы
+    position_x: str | None = "0px"
     position_y: str | None = "0px"
-    width: str | None = "0px"
-    height: str | None = "0px"
-    aligment: str = Field()
+    width: str | None = "100px"
+    height: str | None = "100px"
+    alignment: str | None = "left"
     element: Element
 
     # @validator('alignment')
@@ -30,7 +30,7 @@ class ElementWrapper(BaseModel):
 
 
 class ElementsList(BaseModel):
-    elements: List[Element]
+    elements: List[ElementWrapper] | None = []
 
 
 class Token(BaseModel):

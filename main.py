@@ -6,14 +6,15 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, UploadFile, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
-from starlette.responses import FileResponse, HTMLResponse, RedirectResponse
+from starlette.responses import FileResponse, HTMLResponse
 from starlette.responses import RedirectResponse
 
 from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, create_new_user, \
     get_current_active_user
 from src.const import BASE_PATH
-from src.modules import Token, User
-from src.save_table import save_uploaded_file
+from src.create_diploma.TableManager import TableManager, print_excel_rows
+from src.modules import Token, User, ElementsList
+from src.create_diploma.save_table import save_uploaded_file
 
 app = FastAPI()
 origins = [
@@ -27,6 +28,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+table_manager = TableManager()
 
 # app.mount("/authorization", StaticFiles(directory=pkg_resources.resource_filename(__name__, 'authorization')), name="authorization")
 # app.include_router(
@@ -82,7 +84,7 @@ async def read_start_page(
 #  Эта функция просто возвращает страницу входа
 @app.get('/authorization')
 async def give_authorize_page():
-    return FileResponse("src/authorization/index.html", media_type="text/html")
+    return FileResponse("src//authorization//index.html", media_type="text/html")
 
 
 @app.get('/{static}')
@@ -145,6 +147,13 @@ async def upload_table(
     """Получает таблицу (пока только excel) с элементами от клиента"""
     await save_uploaded_file(current_user.username, project_name, file)
     return
+
+@app.get('/create-result')
+async def create_result(
+        current_user: Annotated[User, Depends(get_current_active_user)], elements: ElementsList, project_name: str
+):
+    await print_excel_rows(current_user.username, project_name, elements)
+
 
 # TODO: в будущем нужно будет сохранять названия существующих проектов пользователя
 # @app.get('')
