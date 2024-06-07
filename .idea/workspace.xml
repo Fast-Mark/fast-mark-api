@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f6f5699-ad4d-469e-8f88-fed9539d2cb4" name="Changes" comment="я что-то пытался сделать">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/create_diploma/img.png" afterDir="false" />
+    <list default="true" id="0f6f5699-ad4d-469e-8f88-fed9539d2cb4" name="Changes" comment="изменение изображений">
+      <change afterPath="$PROJECT_DIR$/src/create_diploma/ElementFont.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/create_diploma/ElementProvider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/create_diploma/TableManager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/create_diploma/download_result.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/authorization/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/authorization/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/save_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/create_diploma/save_table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +23,16 @@
       <list>
         <option value="FastAPI main" />
         <option value="FastAPI test_main" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -54,15 +60,17 @@
   &quot;keyToString&quot;: {
     &quot;FastAPI.testFastApi.executor&quot;: &quot;Run&quot;,
     &quot;Python.TableManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.download_result.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;work/image__creator&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/programming/python projects/testFastApi/src/authorization&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -79,6 +87,7 @@
       <recent name="E:\programming\python projects\testFastApi" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\programming\python projects\testFastApi\user_folders\a" />
       <recent name="E:\programming\python projects\testFastApi\src\create_diploma" />
       <recent name="E:\programming\python projects\testFastApi" />
       <recent name="E:\programming\python projects\testFastApi\src" />
@@ -108,6 +117,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="download_result" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="testFastApi" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/create_diploma" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/create_diploma/download_result.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="testFastApi" type="Python.FastAPI">
       <option name="file" value="$PROJECT_DIR$/main.py" />
       <module name="testFastApi" />
@@ -126,6 +158,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.TableManager" />
+        <item itemvalue="Python.download_result" />
       </list>
     </recent_temporary>
   </component>
@@ -156,7 +189,10 @@
       <workItem from="1717477199820" duration="2734000" />
       <workItem from="1717595408870" duration="5141000" />
       <workItem from="1717648046375" duration="3600000" />
-      <workItem from="1717655143821" duration="1033000" />
+      <workItem from="1717655143821" duration="2107000" />
+      <workItem from="1717757861475" duration="6485000" />
+      <workItem from="1717768540650" duration="3000" />
+      <workItem from="1717768557274" duration="479000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -174,19 +210,40 @@
       <option name="project" value="LOCAL" />
       <updated>1717477276246</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="изменение изображений">
+      <option name="closed" value="true" />
+      <created>1717658558512</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717658558512</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="я что-то пытался сделать" />
-    <option name="LAST_COMMIT_MESSAGE" value="я что-то пытался сделать" />
+    <MESSAGE value="изменение изображений" />
+    <option name="LAST_COMMIT_MESSAGE" value="изменение изображений" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/testFastApi$TableManager.coverage" NAME="TableManager Coverage Results" MODIFIED="1717656002197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/create_diploma" />
+    <SUITE FILE_PATH="coverage/testFastApi$TableManager.coverage" NAME="TableManager Coverage Results" MODIFIED="1717768796323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/create_diploma" />
     <SUITE FILE_PATH="coverage/testFastApi$testFastApi.coverage" NAME="testFastApi Coverage Results" MODIFIED="1717479177486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/testFastApi$download_result.coverage" NAME="download_result Coverage Results" MODIFIED="1717766986782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/create_diploma" />
   </component>
 </project>

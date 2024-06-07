@@ -14,10 +14,10 @@ class Element(BaseModel):
 
 class ElementWrapper(BaseModel):
     key: str | None # Ключ из таблицы
-    position_x: str | None = "0px"
-    position_y: str | None = "0px"
-    width: str | None = "100px"
-    height: str | None = "100px"
+    position_x: int | None = 0
+    position_y: int | None = 0
+    width: str | None = "100"
+    height: str | None = "100"
     alignment: str | None = "left"
     element: Element
 

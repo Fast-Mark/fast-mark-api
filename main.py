@@ -12,7 +12,7 @@ from starlette.responses import RedirectResponse
 from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, create_new_user, \
     get_current_active_user
 from src.const import BASE_PATH
-from src.create_diploma.TableManager import TableManager, print_excel_rows
+from src.create_diploma.TableManager import print_excel_rows
 from src.modules import Token, User, ElementsList
 from src.create_diploma.save_table import save_uploaded_file
 
@@ -28,7 +28,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-table_manager = TableManager()
 
 # app.mount("/authorization", StaticFiles(directory=pkg_resources.resource_filename(__name__, 'authorization')), name="authorization")
 # app.include_router(
@@ -132,7 +131,6 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    # СУКАА ХУЯЛИ НЕ РАБОТАЕТ
     response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False,
                         domain="http://localhost:5173/")
     return Token(access_token=access_token, token_type="bearer")
@@ -153,7 +151,14 @@ async def create_result(
         current_user: Annotated[User, Depends(get_current_active_user)], elements: ElementsList, project_name: str
 ):
     await print_excel_rows(current_user.username, project_name, elements)
+    return
 
+@app.get('/download-result')
+async def download_result(
+        current_user: Annotated[User, Depends(get_current_active_user)], project_name: str
+):
+    # result = await
+    return
 
 # TODO: в будущем нужно будет сохранять названия существующих проектов пользователя
 # @app.get('')
