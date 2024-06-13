@@ -10,12 +10,14 @@ from src.create_diploma.ElementFont import find_ttf_file
 from src.create_diploma.download_result import get_result
 from src.modules import ElementsList, ElementWrapper, Element
 
+from fastapi import HTTPException
 
 def insert_text_on_image():
     pass
 
 
 def find_key_index(sheet: Worksheet, elements: ElementsList) -> dict:
+    """"""
     keys_index = dict()
     element: ElementWrapper
     for element in elements.elements:
@@ -34,7 +36,10 @@ async def print_excel_rows(user_name: str, project_name: str, elements: Elements
     path = os.path.join(BASE_PATH, f"user_folders/{user_name}/{project_name}_table{table_format}")
     image_save_path = os.path.join(BASE_PATH, f"user_folders/{user_name}/{project_name}")
 
-    workbook: Workbook = openpyxl.load_workbook(filename=path)
+    try:
+        workbook: Workbook = openpyxl.load_workbook(filename=path)
+    except FileNotFoundError:
+        return HTTPException(status_code=404, detail="table not found")
 
     # Получаем активный лист
     sheet: Worksheet = workbook.active
@@ -43,9 +48,13 @@ async def print_excel_rows(user_name: str, project_name: str, elements: Elements
     index = 0
     element: ElementWrapper
     for row in sheet.iter_rows(values_only=True):
-        if index > count: continue
+        if index > count: break
 
-        image = Image.open(f"../../user_folders/{user_name}/{project_name}_img.png")
+        try:
+            image = Image.open(os.path.join(BASE_PATH, f"user_folders/{user_name}/{project_name}_image.jpg"))
+        except FileNotFoundError:
+            return HTTPException(status_code=404, detail="image not found")
+
         draw = ImageDraw.Draw(image)
         for element in elements.elements:
             font = ImageFont.truetype(find_ttf_file(element.element.font_family), 50)
@@ -55,7 +64,8 @@ async def print_excel_rows(user_name: str, project_name: str, elements: Elements
         image.save(image_save_path + f"{index}.png")
         index += 1
 
-    await get_result(user_name, project_name)
+    # TODO: сделать нормальную выдачу фалов раз не получается архивом
+    # await get_result(user_name, project_name)
 
 
 if __name__ == '__main__':
@@ -66,8 +76,6 @@ if __name__ == '__main__':
         {
             "key": "Тип операции",
             "element": element,
-            "position_x": 100,
-            "position_y": 100,
         }
     )
     some_elements = ElementsList.parse_obj({})
@@ -76,5 +84,5 @@ if __name__ == '__main__':
         element_wrapper
     )
 
-    asyncio.run(print_excel_rows("a", "aa", some_elements))
+    print(asyncio.run(print_excel_rows("a", "b", some_elements)))
 

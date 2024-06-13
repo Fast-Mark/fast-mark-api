@@ -6,7 +6,7 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, UploadFile, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
-from starlette.responses import FileResponse, HTMLResponse
+from starlette.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.responses import RedirectResponse
 
 from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, create_new_user, \
@@ -14,7 +14,7 @@ from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_
 from src.const import BASE_PATH
 from src.create_diploma.TableManager import print_excel_rows
 from src.modules import Token, User, ElementsList
-from src.create_diploma.save_table import save_uploaded_file
+from src.create_diploma.save_files import save_uploaded_file, save_image
 
 app = FastAPI()
 origins = [
@@ -22,26 +22,11 @@ origins = [
 ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-# app.mount("/authorization", StaticFiles(directory=pkg_resources.resource_filename(__name__, 'authorization')), name="authorization")
-# app.include_router(
-#     apiRouter,
-#     prefix="/api",
-# )
-
-# @app.get("/api/.*", status_code=404, include_in_schema=False)
-# def invalid_api():
-#     return None
-
-# @app.get("/.*", include_in_schema=False)
-# def root():
-#     return HTMLResponse(pkg_resources.resource_string(__name__, 'authorization/index.html'))
 
 
 @app.get('/')
@@ -75,8 +60,7 @@ async def read_start_page(
         data={"sub": current_user.username}, expires_delta=access_token_expires
     )
 
-    response.set_cookie(key="Authorization", value=f'bearer {access_token}', httponly=False,
-                        domain="http://localhost:5173/")
+    response.set_cookie(key="jwt", value=f'bearer {access_token}', httponly=False)
     return HTMLResponse("src/workspace/index.html", media_type="text/html")
 
 
@@ -86,13 +70,13 @@ async def give_authorize_page():
     return FileResponse("src//authorization//index.html", media_type="text/html")
 
 
-@app.get('/{static}')
-async def give_other_statics(static: str):
-    logger = logging.getLogger("uvicorn.info")
-    logger.info(static + " sssss")
-    if static is None:
-        return FileResponse("src/authorization/index.html", media_type="text/html")
-    return FileResponse(path=f"src//{static}")
+# @app.get('/{static}')
+# async def give_other_statics(static: str):
+#     logger = logging.getLogger("uvicorn.info")
+#     logger.info(static + " sssss")
+#     if static is None:
+#         return FileResponse("src/authorization/index.html", media_type="text/html")
+#     return FileResponse(path=f"src//{static}")
 
 
 @app.get('/create-user')
@@ -137,25 +121,37 @@ async def login_for_access_token(
 
 
 # TODO: сохранять таблицу и шрифт.
-# пока что можно просто создаватоь папку пользователя и добавлять туда
 @app.post('/upload-table')
 async def upload_table(
         current_user: Annotated[User, Depends(get_current_active_user)], file: UploadFile, project_name: str
 ):
     """Получает таблицу (пока только excel) с элементами от клиента"""
-    await save_uploaded_file(current_user.username, project_name, file)
-    return
+    result = await save_uploaded_file(current_user.username, project_name, file)
+    return result
 
-@app.get('/create-result')
-async def create_result(
-        current_user: Annotated[User, Depends(get_current_active_user)], elements: ElementsList, project_name: str
+
+@app.post('/upload-image')
+async def upload_table(
+        current_user: Annotated[User, Depends(get_current_active_user)], file: UploadFile, project_name: str
 ):
-    await print_excel_rows(current_user.username, project_name, elements)
-    return
+    result = await save_image(current_user.username, project_name, file)
+    return result
+
+
+@app.post('/create-result')
+async def create_result(
+        username, elements: ElementsList, project_name: str
+):
+    # TODO: сохранять ElementsList в бд
+    # logger = logging.getLogger("uvicorn.info")
+    # logger.warning(0, "AAAAAAAAAAAAAAAA")
+    result = await print_excel_rows(username, project_name, elements)
+    return result
+
 
 @app.get('/download-result')
 async def download_result(
-        current_user: Annotated[User, Depends(get_current_active_user)], project_name: str
+        current_user: Annotated[User, Depends(get_current_active_user)], project_name: str, index: int
 ):
     # result = await
     return

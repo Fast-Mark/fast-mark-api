@@ -19,7 +19,7 @@ class ElementWrapper(BaseModel):
     width: str | None = "100"
     height: str | None = "100"
     alignment: str | None = "left"
-    element: Element
+    element: Element | None = Element.parse_obj({})
 
     # @validator('alignment')
     # def validate_alignment(cls, value):
