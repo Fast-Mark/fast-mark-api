@@ -1,7 +1,7 @@
 from PIL import ImageFont
 import os
 
-from src.const import BASE_PATH
+from api.src.const import BASE_PATH
 
 
 def find_ttf_file(name, folder_path='/all_fonts'):

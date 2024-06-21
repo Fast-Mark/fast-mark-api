@@ -1,7 +1,7 @@
 import os
 from zipfile import ZipFile
 
-from src.const import BASE_PATH
+from api.src.const import BASE_PATH
 
 
 async def get_result(user_name: str, project_name: str):

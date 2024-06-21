@@ -7,8 +7,8 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, ExpiredSignatureError
 from passlib.context import CryptContext
 
-from src.bd import UsersDB
-from src.modules import TokenData, User
+from api.src.bd import UsersDB
+from api.src.modules import TokenData, User
 
 user_db = UsersDB()
 

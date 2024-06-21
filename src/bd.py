@@ -1,7 +1,6 @@
-import logging
 import sqlite3
 
-from src.modules import UserInDB
+from api.src.modules import UserInDB
 
 
 class UsersDB():

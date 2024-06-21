@@ -9,12 +9,12 @@ from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.responses import RedirectResponse
 
-from src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, create_new_user, \
+from api.src.autorize import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, create_new_user, \
     get_current_active_user
-from src.const import BASE_PATH
-from src.create_diploma.TableManager import print_excel_rows
-from src.modules import Token, User, ElementsList
-from src.create_diploma.save_files import save_uploaded_file, save_image
+from api.src.const import BASE_PATH
+from api.src.create_diploma.TableManager import print_excel_rows
+from api.src.modules import Token, User, ElementsList
+from api.src.create_diploma.save_files import save_uploaded_file, save_image
 
 app = FastAPI()
 origins = [

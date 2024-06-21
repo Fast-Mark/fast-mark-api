@@ -5,10 +5,10 @@ from PIL import ImageDraw, Image, ImageFont
 from openpyxl.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 
-from src.const import BASE_PATH
-from src.create_diploma.ElementFont import find_ttf_file
-from src.create_diploma.download_result import get_result
-from src.modules import ElementsList, ElementWrapper, Element
+from api.src.const import BASE_PATH
+from api.src.create_diploma.ElementFont import find_ttf_file
+from api.src.create_diploma.download_result import get_result
+from api.src.modules import ElementsList, ElementWrapper, Element
 
 from fastapi import HTTPException
 
