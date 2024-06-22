@@ -29,13 +29,14 @@ def get_password_hash(password):
 
 
 def authenticate_user(username: str, password: str):
-    """Авторизация пользователя и выдача ему"""
+    """Авторизация пользователя и запись в бд"""
     user = user_db.get_user(username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
         return False
     return user
+
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
@@ -46,6 +47,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
@@ -62,7 +64,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     except ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail = "Время действия токена истекло",
+            detail="Время действия токена истекло",
             headers={"WWW-Authenticate": "Bearer"},
         )
     except JWTError:
@@ -76,11 +78,12 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
 
 async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)]
+        current_user: Annotated[User, Depends(get_current_user)]
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
 
 def create_new_user(user_name, user_password, user_emeil):
     hashed_password = get_password_hash(user_password)
