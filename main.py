@@ -131,7 +131,7 @@ async def upload_table(
 
 
 @app.post('/upload-image')
-async def upload_table(
+async def upload_image(
         current_user: Annotated[User, Depends(get_current_active_user)], file: UploadFile, project_name: str
 ):
     result = await save_image(current_user.username, project_name, file)

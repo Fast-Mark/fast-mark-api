@@ -9,6 +9,7 @@ async def save_uploaded_file(user_name: str, project_name: str, file: UploadFile
     # Создаем папку пользователя, если её ещё нет
     if not os.path.exists(user_folder_path):
         os.makedirs(user_folder_path)
+    #     TODO: нужно возвращать ошибку (HTTP exception) о существующем имени проекта
 
     #TODO: сделать проверку типа таблицы на стороне пользователя 
     file_path = os.path.join(user_folder_path, project_name + "_table.xlsx")
@@ -27,6 +28,7 @@ async def save_image(user_name: str, project_name: str, file: UploadFile = File(
 
     if not os.path.exists(user_folder_path):
         os.makedirs(user_folder_path)
+    #     TODO: нужно возвращать ошибку (HTTP exception) о существующем имени проекта
 
     file_path = os.path.join(user_folder_path, project_name + "_image.jpg")
     with open(file_path, "wb") as buffer:
